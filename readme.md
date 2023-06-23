@@ -20,6 +20,28 @@ LCOE = (Investimento + Despesas de Operação + Despesas de Manutenção) / Tota
 
 É importante ressaltar que os valores inseridos nos campos do formulário são convertidos em números decimais para garantir a precisão do cálculo do LCOE.
 
+## Código JavaScript da Calculadora LCOE
+
+```javascript
+$(document).ready(function() {
+  $('#lcoeForm').on('submit', function(event) {
+    event.preventDefault(); // Impede o envio do formulário
+
+    // Obtém os valores dos campos
+    var investment = parseFloat($('#investmentInput').val());
+    var operatingExpenses = parseFloat($('#operatingExpensesInput').val());
+    var maintenanceExpenses = parseFloat($('#maintenanceExpensesInput').val());
+    var totalElectricity = parseFloat($('#totalElectricityInput').val());
+
+    // Calcula o LCOE
+    var lcoe = (investment + operatingExpenses + maintenanceExpenses) / totalElectricity;
+
+    // Exibe o resultado
+    $('#result').html('<h3>O LCOE é: ' + lcoe.toFixed(2) + '</h3>');
+  });
+});
+```
+
 ## Como usar
 
 1. Abra o arquivo `index.html` em um navegador web compatível.
