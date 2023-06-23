@@ -2,6 +2,23 @@
 
 Este é um projeto de uma calculadora LCOE (Levelized Cost of Energy) implementada em HTML e JavaScript. O LCOE é uma métrica comumente utilizada na indústria de energia para avaliar o custo médio de geração de energia ao longo do tempo.
 
+## Cálculo do LCOE
+
+A calculadora LCOE utiliza os valores fornecidos pelo usuário para calcular o LCOE (Levelized Cost of Energy), que é o custo médio de geração de energia ao longo do tempo. O cálculo é realizado da seguinte maneira:
+
+1. São obtidos os seguintes valores do formulário preenchido pelo usuário:
+   - **Investimento do Sistema:** Valor do investimento realizado no sistema de geração de energia.
+   - **Despesas de Operação:** Valor das despesas operacionais do sistema.
+   - **Despesas de Manutenção:** Valor das despesas de manutenção do sistema.
+   - **Total de Eletricidade Gerada:** Valor total de eletricidade gerada pelo sistema.
+
+2. O LCOE é calculado usando a fórmula:
+LCOE = (Investimento + Despesas de Operação + Despesas de Manutenção) / Total de Eletricidade Gerada
+
+3. O resultado é exibido na página, mostrando o custo médio de geração de energia (LCOE).
+
+É importante ressaltar que os valores inseridos nos campos do formulário são convertidos em números decimais para garantir a precisão do cálculo do LCOE.
+
 ## Como usar
 
 1. Abra o arquivo `index.html` em um navegador web compatível.
