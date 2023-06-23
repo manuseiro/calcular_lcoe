@@ -13,8 +13,9 @@ A calculadora LCOE utiliza os valores fornecidos pelo usuário para calcular o L
    - **Total de Eletricidade Gerada:** Valor total de eletricidade gerada pelo sistema.
 
 2. O LCOE é calculado usando a fórmula:
+```
 LCOE = (Investimento + Despesas de Operação + Despesas de Manutenção) / Total de Eletricidade Gerada
-
+```
 3. O resultado é exibido na página, mostrando o custo médio de geração de energia (LCOE).
 
 É importante ressaltar que os valores inseridos nos campos do formulário são convertidos em números decimais para garantir a precisão do cálculo do LCOE.
