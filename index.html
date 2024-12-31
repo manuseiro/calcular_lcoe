@@ -19,6 +19,10 @@
         <input type="text" class="form-control" id="operatingExpensesInput" required>
       </div>
       <div class="mb-3">
+        <label for="opexInflationInput" class="form-label">Aumento Anual do OPEX (Inflação %):</label>
+        <input type="text" class="form-control" id="opexInflationInput" required>
+      </div>
+      <div class="mb-3">
         <label for="energyGenerationInput" class="form-label">Geração de Energia Anual (kWh):</label>
         <input type="text" class="form-control" id="energyGenerationInput" required>
       </div>
@@ -33,6 +37,37 @@
       <button type="submit" class="btn btn-primary">Calcular LCOE</button>
     </form>
     <div id="result" class="mt-3"></div>
+
+    <!-- Resumo e explicação sobre LCOE -->
+    <div id="lcoeExplanation" class="mt-4" style="display:none;">
+      <h3>O que é LCOE?</h3>
+      <p>
+        O LCOE (Levelized Cost of Energy) é uma métrica usada para medir o custo médio por unidade de energia produzida ao longo da vida útil de um projeto de geração de energia. Ele leva em consideração todos os custos (investimento inicial, despesas operacionais anuais e geração de energia) e calcula o valor que o produtor de energia precisa cobrar por cada kWh para cobrir esses custos e alcançar o equilíbrio financeiro.
+      </p>
+      <h4>Explicação dos Campos Preenchidos:</h4>
+      <ul>
+        <li><strong>Investimento Inicial (CAPEX):</strong> O valor total investido no projeto de geração de energia, como a compra de equipamentos e instalação.</li>
+        <li><strong>Despesas Operacionais no Ano 1 (OPEX):</strong> O custo operacional no primeiro ano, que inclui manutenção, pessoal, entre outros custos. Este valor pode aumentar anualmente devido à inflação.</li>
+        <li><strong>Aumento Anual do OPEX (Inflação %):</strong> A porcentagem que as despesas operacionais aumentam a cada ano devido à inflação ou aumento de custos.</li>
+        <li><strong>Geração de Energia Anual (kWh):</strong> A quantidade de energia que o sistema gerará anualmente (em kWh).</li>
+        <li><strong>Taxa de Desconto (%):</strong> A taxa utilizada para descontar os fluxos de caixa futuros, refletindo o custo do dinheiro ao longo do tempo.</li>
+        <li><strong>Vida Útil do Projeto (anos):</strong> O número de anos que o sistema de geração de energia será utilizado antes de ser desativado ou substituído.</li>
+      </ul>
+      <h4>Cálculo do LCOE:</h4>
+      <p>
+        O LCOE é calculado dividindo o custo total do projeto (CAPEX + OPEX descontado) pela quantidade total de energia gerada durante a vida útil do projeto (descontada ao longo do tempo).
+      </p>
+      <pre>
+        Fórmula:
+        LCOE = (CAPEX + Σ OPEX_t / (1 + Taxa de Desconto)^t) / Σ Energia_t / (1 + Taxa de Desconto)^t
+
+        Onde:
+        - CAPEX é o investimento inicial,
+        - OPEX_t é o OPEX do ano t,
+        - Energia_t é a geração de energia no ano t,
+        - t é o número do ano.
+      </pre>
+    </div>
   </div>
 
   <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
@@ -68,7 +103,7 @@
         digits: 2,
         radixPoint: ",",
         clearMaskOnLostFocus: false
-      }).mask("#discountRateInput");
+      }).mask("#discountRateInput, #opexInflationInput");
 
       // Calcula o LCOE
       $('#lcoeForm').on('submit', function(event) {
@@ -77,17 +112,22 @@
         // Obtém os valores de entrada (remove formatações das máscaras)
         const investment = parseFloat(Inputmask.unmask($('#investmentInput').val(), { alias: "currency" }));
         const opex = parseFloat(Inputmask.unmask($('#operatingExpensesInput').val(), { alias: "currency" }));
+        const opexInflation = parseFloat(Inputmask.unmask($('#opexInflationInput').val(), { alias: "percentage" })) / 100;
         const energyGeneration = parseFloat(Inputmask.unmask($('#energyGenerationInput').val(), { alias: "decimal" }));
         const discountRate = parseFloat(Inputmask.unmask($('#discountRateInput').val(), { alias: "percentage" })) / 100;
         const projectLifetime = parseInt(Inputmask.unmask($('#projectLifetimeInput').val(), { alias: "decimal" }));
 
-        // Calcula o numerador e o denominador do LCOE
+        // Calcula o numerador (CAPEX + OPEX descontado por ano)
         let numerator = investment;
-        let denominator = 0;
-
         for (let t = 1; t <= projectLifetime; t++) {
-          numerator += opex / Math.pow(1 + discountRate, t);
-          denominator += energyGeneration / Math.pow(1 + discountRate, t);
+          const opex_t = opex * Math.pow(1 + opexInflation, t - 1); // OPEX com inflação
+          numerator += opex_t / Math.pow(1 + discountRate, t); // Desconto do OPEX
+        }
+
+        // Calcula o denominador (Geração de Energia descontada)
+        let denominator = 0;
+        for (let t = 1; t <= projectLifetime; t++) {
+          denominator += energyGeneration / Math.pow(1 + discountRate, t); // Desconto da geração de energia
         }
 
         // Calcula o LCOE
@@ -95,6 +135,14 @@
 
         // Exibe o resultado formatado
         $('#result').html('<h3>O LCOE é: R$ ' + lcoe.toFixed(4).replace('.', ',') + ' por kWh</h3>');
+
+        // Exibe o resumo e explicação sobre LCOE
+        $('#lcoeExplanation').show();
+
+        // Anima a rolagem para o resultado
+        $('html, body').animate({
+          scrollTop: $('#result').offset().top
+        }, 500);
       });
     });
   </script>
