@@ -1,68 +1,89 @@
-# Calculadora LCOE
+# Calculadora LCOE Avançada
 
-Este é um projeto de uma calculadora LCOE (Levelized Cost of Energy) implementada em HTML e JavaScript. O LCOE é uma métrica comumente utilizada na indústria de energia para avaliar o custo médio de geração de energia ao longo do tempo.
+Este projeto é uma calculadora interativa para calcular o **LCOE (Levelized Cost of Energy)** de sistemas fotovoltaicos. A calculadora é construída com **HTML**, **CSS**, **JavaScript** e usa bibliotecas como **Bootstrap** e **Inputmask** para oferecer uma experiência de usuário otimizada e intuitiva.
 
-## Cálculo do LCOE
+## 📋 Índice
+- [Visão Geral](#visão-geral)
+- [Funcionalidades](#funcionalidades)
+- [Pré-requisitos](#pré-requisitos)
+- [Como Usar](#como-usar)
+- [Tecnologias Utilizadas](#tecnologias-utilizadas)
+- [Contribuindo](#contribuindo)
+- [Licença](#licença)
 
-A calculadora LCOE utiliza os valores fornecidos pelo usuário para calcular o LCOE (Levelized Cost of Energy), que é o custo médio de geração de energia ao longo do tempo. O cálculo é realizado da seguinte maneira:
+## 🚀 Visão Geral
 
-1. São obtidos os seguintes valores do formulário preenchido pelo usuário:
-   - **Investimento do Sistema:** Valor do investimento realizado no sistema de geração de energia.
-   - **Despesas de Operação:** Valor das despesas operacionais do sistema.
-   - **Despesas de Manutenção:** Valor das despesas de manutenção do sistema.
-   - **Total de Eletricidade Gerada:** Valor total de eletricidade gerada pelo sistema.
+O LCOE é uma métrica usada para calcular o custo médio por unidade de energia gerada por um sistema ao longo de sua vida útil. Esta calculadora permite que você insira dados como investimento inicial, custos operacionais, taxa de desconto, geração de energia e vida útil para obter o resultado de forma fácil e precisa.
 
-2. O LCOE é calculado usando a fórmula:
+## ✨ Funcionalidades
+
+- Máscaras de entrada para valores monetários, porcentagens e números.
+- Suporte ao formato brasileiro para moedas e separadores decimais.
+- Interface limpa e responsiva usando **Bootstrap 5**.
+- Resultados exibidos em tempo real com cálculos precisos.
+- Suporte para taxas de desconto e vida útil do projeto.
+
+## ⚙️ Pré-requisitos
+
+Certifique-se de ter um navegador moderno atualizado para executar este projeto.
+
+## 🛠 Como Usar
+
+1. Clone este repositório:
+   ```bash
+   git clone https://github.com/seuusuario/calculadora-lcoe.git
+   cd calculadora-lcoe
+   ```
+
+2. Abra o arquivo index.html em qualquer navegador.
+
+3. Preencha os campos do formulário:
+
+- **Investimento Inicial (CAPEX):** O valor total do sistema em R$.
+- Despesas Operacionais (OPEX): Custos anuais de operação do sistema em R$.
+- Geração de Energia Anual (kWh): Energia gerada pelo sistema por ano em kWh.
+- Taxa de Desconto (%): Percentual da taxa de desconto anual.
+- Vida Útil do Projeto (anos): Quantos anos o projeto vai durar.
+
+4. Clique em Calcular LCOE para visualizar o resultado.
+
+## 💻 Tecnologias Utilizadas
+- HTML5
+- CSS3
+- JavaScript (ES6+)
+- Bootstrap 5 - Para o design responsivo.
+- Inputmask - Para aplicar máscaras de entrada nos campos.
+
+## 🧩 Exemplo de Uso
+
+Após preencher os campos corretamente, o resultado do LCOE será exibido em formato monetário:
 ```
-LCOE = (Investimento + Despesas de Operação + Despesas de Manutenção) / Total de Eletricidade Gerada
+O LCOE é: R$ 0,50 por kWh
 ```
-3. O resultado é exibido na página, mostrando o custo médio de geração de energia (LCOE).
+## 🤝 Contribuindo
 
-É importante ressaltar que os valores inseridos nos campos do formulário são convertidos em números decimais para garantir a precisão do cálculo do LCOE.
+Contribuições são bem-vindas! Para contribuir:
 
-## Código JavaScript da Calculadora LCOE
+1. Faça um fork do repositório.
+2. Crie uma branch para sua feature:
 
-```javascript
-$(document).ready(function() {
-  $('#lcoeForm').on('submit', function(event) {
-    event.preventDefault(); // Impede o envio do formulário
-
-    // Obtém os valores dos campos
-    var investment = parseFloat($('#investmentInput').val());
-    var operatingExpenses = parseFloat($('#operatingExpensesInput').val());
-    var maintenanceExpenses = parseFloat($('#maintenanceExpensesInput').val());
-    var totalElectricity = parseFloat($('#totalElectricityInput').val());
-
-    // Calcula o LCOE
-    var lcoe = (investment + operatingExpenses + maintenanceExpenses) / totalElectricity;
-
-    // Exibe o resultado
-    $('#result').html('<h3>O LCOE é: ' + lcoe.toFixed(2) + '</h3>');
-  });
-});
+```
+git checkout -b feature/sua-feature
 ```
 
-## Como usar
+3. Faça o commit das suas alterações:
 
-1. Abra o arquivo `index.html` em um navegador web compatível.
-2. Preencha os seguintes campos do formulário:
+```
+git commit -m "Adiciona nova feature"
+```
 
-   - **Investimento do Sistema:** Insira o valor do investimento realizado no sistema de geração de energia.
-   - **Despesas de Operação:** Insira o valor das despesas operacionais do sistema.
-   - **Despesas de Manutenção:** Insira o valor das despesas de manutenção do sistema.
-   - **Total de Eletricidade Gerada:** Insira o valor total de eletricidade gerada pelo sistema.
+4. Envie para o seu fork:
+```
+git push origin feature/sua-feature
+```
 
-3. Clique no botão "Calcular".
+5. Abra um Pull Request.
 
-O resultado do cálculo do LCOE será exibido abaixo do botão "Calcular", indicando o custo médio de geração de energia.
+## 📜 Licença
 
-## Tecnologias utilizadas
-
-- HTML
-- CSS (Bootstrap 5.3.0)
-- JavaScript (jQuery 3.6.0)
-
-## Observações
-
-- Certifique-se de ter uma conexão com a internet para carregar as bibliotecas do Bootstrap e jQuery.
-- O cálculo do LCOE é feito automaticamente quando o formulário é enviado. Os valores inseridos nos campos são convertidos em números decimais para garantir a precisão do cálculo.
+Este projeto está licenciado sob a MIT License. Sinta-se à vontade para usá-lo e modificá-lo!
